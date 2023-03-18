@@ -5,6 +5,10 @@
 
 @layer base{
   button{
-    @apply border border-black rounded-xl px-5 py-1
+    @apply border border-black rounded-xl px-5 py-1;
+  }
+
+  h1{
+    @apply text-orange-500 text-4xl text-center font-light;
   }
 }
