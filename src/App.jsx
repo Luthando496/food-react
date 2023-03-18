@@ -1,12 +1,17 @@
-import { useState } from 'react'
+import HeadlineCard from './components/HeadlineCard'
+import Hero from './components/Hero'
 import Navbar from './components/Navbar'
+import Food from './components/Food'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div>
     <Navbar />
+    <Hero />
+    <HeadlineCard />
+    <Food />
       
     </div>
   )
