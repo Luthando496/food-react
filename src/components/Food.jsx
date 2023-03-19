@@ -1,20 +1,49 @@
-import React, { useState } from 'react'
-import {data,categories} from '../data/data.js'
+import React, { useEffect, useState } from 'react'
+import { useSelector,useDispatch } from 'react-redux'
+import {data} from '../data/data.js'
+import axios from 'axios'
+import { productActions } from '../store/store.js'
+import { fetchProducts,Filter } from '../store/actions/actions.js'
 
 
 const Food = () => {
 
+    const products = useSelector(state=> state.product.products)
+    const dispatch = useDispatch()
 
-    const [food,setFood] = useState(data)
+
+
+
+    const [food,setFood] = useState(products && products)
+    const [cate,setCate] = useState('')
 
     const filterType=(cate)=>{
-        setFood(data.filter(item=>item.category === cate))
+        setFood(products?.meals?.filter(item=>item.strCategory === cate))
+        console.log(products)
     }
 
 
     const filterPrice=(price)=>{
         setFood(data.filter(item=>item.price === price))
     }
+    const filD=(cate)=>{
+        dispatch(Filter(cate))
+
+    }
+    const fetchCate=async()=>{
+        const {data} = await axios.get('https://www.themealdb.com/api/json/v1/1/categories.php')
+
+        setCate(data)
+    }
+
+    // console.log(food)
+
+    useEffect(()=>{
+        fetchCate()
+    },[dispatch,products])
+
+
+
 
 
   return (
@@ -23,45 +52,36 @@ const Food = () => {
 
 
         {/* Filter row */}
-        <div className='flex flex-col lg:flex-row justify-between'>
+        <div className='flex flex-col lg:flex-row justify-center'>
 
             {/* filter type */}
             <div >
                 <p className='font-bold text-gray-700'>FIlter Type</p>
                 <div className='flex justify-between flex-wrap'>
-                    <button onClick={()=> setFood(data)} className='rounded-full hover:bg-green-500 text-green-600 border-green-400 mr-3 mb-4 md:mb-0'>All</button>
-                    <button onClick={()=> filterType('burger')} className='rounded-full hover:bg-green-500 text-green-600 border-green-400 mr-3 mb-4 md:mb-0'>Burger</button>
-                    <button onClick={()=> filterType('salad')} className='hover:bg-green-500 rounded-full text-green-600 border-green-400 mr-3 mb-4 md:mb-0'>salad</button>
-                    <button onClick={()=> filterType('chicken')} className='hover:bg-green-500 rounded-full text-green-600 border-green-400 mr-3 mb-4 md:mb-0'>chicken</button>
-                    <button onClick={()=> filterType('pizza')} className='hover:bg-green-500 rounded-full text-green-600 border-green-400 mr-3 mb-4 md:mb-0'>pizza</button>
+                {cate?.categories?.map((f,i)=>(
+                    <button key={i} onClick={()=> filD(f.strCategory)} className='rounded-full hover:bg-green-500 text-green-600 border-green-400 mr-3 mb-4 md:mb-0'>{f.strCategory}</button>
+
+                ))}
                 </div>
             </div>
 
                 {/* filter price */}
-        <div>
-        <p className='font-bold text-gray-700'>Filter Price</p>
-        <div className='flex justify-between flex-wrap max-w-[390px]'>
-        <button onClick={()=> filterPrice('$')} className='hover:bg-blue-500 rounded-full text-blue-600 border-blue-400 mr-3 mb-4 md:mb-0'>$</button>
-        <button onClick={()=> filterPrice('$$')} className='hover:bg-blue-500 rounded-full text-blue-600 border-blue-400 mr-3 mb-4 md:mb-0'>$$</button>
-        <button onClick={()=> filterPrice('$$$')}  className='hover:bg-blue-500 rounded-full text-blue-600 border-blue-400 mr-3 mb-4 md:mb-0'>$$$</button>
-        <button onClick={()=> filterPrice('$$$$')}  className='hover:bg-blue-500 rounded-full text-blue-600 border-blue-400 mr-3 mb-4 md:mb-0'>$$$$</button>
-        </div>
-        </div>
 
 
         </div>
 
     {/* display food */}
         <div className='grid grid-cols-2 lg:grid-cols-4 gap-4 mt-10' >
-        {food.map((f,i) => (
+        {products?.meals?.map((f,i) => (
             <div key={i} className='shadow-xl border hover:scale-110 duration-300 rounded-t-xl' >
-                <img src={f.image} alt={f.name} className='w-full object-cover h-[200px] rounded-t-xl' />
+                <img src={f.strMealThumb} alt={f.strMeal} className='w-full object-cover h-[200px] rounded-t-xl' />
                 <div className='flex justify-between px-2 py-4'>
-                    <p className='font-bold'>{f.name}</p>
-                    <p><span className='bg-cyan-500 font-light rounded-xl text-white p-2'>{f.price}</span></p>
+                    <p className='font-bold'>{f.strMeal}</p>
+                    <p><span className='bg-cyan-500 font-light rounded-xl text-white p-2'>{f.idMeal}</span></p>
                 </div>
             </div>
         ))}
+
 
         </div>
 

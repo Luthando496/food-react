@@ -1,8 +1,8 @@
-import HeadlineCard from './components/HeadlineCard'
-import Hero from './components/Hero'
 import Navbar from './components/Navbar'
-import Food from './components/Food'
 import Category from './components/Category'
+import {Routes,Route} from 'react-router-dom'
+import Home from './pages/Home'
+import Detail from './pages/Detail'
 
 
 function App() {
@@ -10,9 +10,10 @@ function App() {
   return (
     <div>
     <Navbar />
-    <Hero />
-    <HeadlineCard />
-    <Food />
+      <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/details/:id" element={<Detail />} />
+      </Routes>
     <Category/>
       
     </div>

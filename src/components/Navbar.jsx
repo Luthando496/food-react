@@ -3,7 +3,7 @@ import {AiOutlineMenu, AiOutlineSearch,AiOutlineClose, AiFillTag} from 'react-ic
 import {BsFillCartFill, BsFillSave2Fill} from 'react-icons/bs'
 import {TbTruckDelivery} from 'react-icons/tb'
 import {FaUserFriends,FaWallet} from 'react-icons/fa'
-import {MdFavorite,MdHelp} from 'react-icons/md'
+import {MdFavorite,MdHelp,MdFoodBank} from 'react-icons/md'
 
 
 
@@ -20,22 +20,22 @@ const Navbar = () => {
         </div>
         <h1 className='text-2xl sm:text-3xl lg:4xl px-2'>Best <span className='font-bold'>Foods</span></h1>
 
-        <div className='hidden lg:flex items-center bg-gray-300 rounded-full p-1 text-[14px]'>
-            <p className='bg-black rounded-full text-white p-2'>Delivery</p>
-            <p className='p-2'>Pickup</p>
+        <div className='hidden lg:flex items-center bg-pink-300 rounded-full p-1 text-[14px]'>
+            <p className='bg-black rounded-full text-white p-2'>Food</p>
+            <p className='p-2'>Lover</p>
         </div>
     </div>
 
     {/* search input */}
-    <div className='bg-gray-200 rounded-full px-2 w-[200px] flex items-center sm:w-[400px] lg:w-[500px]'>
+    {/* <div className='bg-gray-200 rounded-full px-2 w-[200px] flex items-center sm:w-[400px] lg:w-[500px]'>
         <AiOutlineSearch size={30} />
         <input type="text" placeholder='search tasty food' className='bg-transparent p-2 focus:outline-none w-full' />
-    </div>
+    </div> */}
 
     {/* cart */}
 
     <button className='bg-black text-white hidden md:flex items-center py-2 rounded-full' >
-        <BsFillCartFill size={30} className='mr-2' />Cart
+        <MdFoodBank size={30} className='mr-2' />Foodie
     </button>
 
     {/* Mobile menu */}
